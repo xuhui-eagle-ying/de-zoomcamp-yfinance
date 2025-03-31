@@ -2,6 +2,8 @@
 
 This project analyzes the historical data of Nasdaq 100 index components over the past decade. The ELT data pipeline is orchestrated using Airflow, loads data into a GCS data lake, processes it with PySpark, stores it in BigQuery, transforms it with dbt, and finally visualizes it using Metabase to explore patterns in Nasdaq 100 stock prices.
 
+![ELT Pipeline Diagram](images/Diagram.png)
+
 ## Table of Contents
 1. [Project Overview](#project-overview)
 2. [Technologies Used](#technologies-used)
@@ -93,6 +95,8 @@ GCS Bucket
  │   └── ...
 ```
 
+![Airflow Screenshot](images/Airflow.png)
+
 ## Data Transformation
 PySpark processes the stock data:
 ```python
@@ -117,6 +121,9 @@ dbt run
 ```
 
 ## Data Warehouse
+
+![BigQuery Screenshot](images/BigQuery.png)
+
 BigQuery processes:
 - **Partitioning & Clustering**: Optimize storage and query performance.
 - **Dimensional Modeling**: Create lookup tables for stock metadata.
@@ -137,6 +144,8 @@ docker run -d -p 3000:3000 --name metabase metabase/metabase
 ```
 
 Access Metabase at `localhost:3000` and connect it to BigQuery.
+
+![Nasdaq 100 Stock Data Visualization](images/Metabase.png)
 
 ### Dashboard Insights:
 1. **Weekly Stock Trends**: Average daily returns for each weekday.
