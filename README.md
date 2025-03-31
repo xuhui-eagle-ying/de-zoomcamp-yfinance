@@ -32,8 +32,10 @@ The pipeline follows these steps:
 - **Metabase**: Provides interactive data visualization.
 
 ## Data Sources
-- **Wikipedia**: Scraped to obtain Nasdaq 100 component stock symbols, company names, sectors, and sub-industries.
-- **Yahoo Finance API**: Used to fetch daily stock price data from 2015 to present.
+- **[Wikipedia](https://en.wikipedia.org/wiki/Nasdaq-100#Related_indices)**: Scraped to obtain Nasdaq 100 component stock symbols, company names, sectors, and sub-industries.  
+![Nasdaq 100 components](images/Wikipedia.png)
+- **[Yahoo Finance API](https://finance.yahoo.com/)**: Used to fetch daily stock price data from 2015 to present.
+![Yahoo Finance](images/yfinance.png)
 
 ## Setting Up GCP Environment
 First, ensure you have Terraform installed:
@@ -112,14 +114,6 @@ data = data.withColumn("rolling_50_day_avg", F.avg("Close").over(Window.partitio
 data.write.format("bigquery").option("table", "your_project.dataset.stock_data").save()
 ```
 
-Using dbt to automate SQL transformations:
-```bash
-dbt init
-dbt debug
-dbt clean
-dbt run
-```
-
 ## Data Warehouse
 
 ![BigQuery Screenshot](images/BigQuery.png)
@@ -129,11 +123,29 @@ BigQuery processes:
 - **Dimensional Modeling**: Create lookup tables for stock metadata.
 - **Aggregations**: Compute annual returns and moving averages.
 
-SQL example to calculate annual returns:
+SQL example for dimensional modeling:
 ```sql
-SELECT ticker, EXTRACT(YEAR FROM Date) AS year, AVG(daily_return) AS annual_avg_return
-FROM `your_project.dataset.stock_data`
-GROUP BY ticker, year;
+CREATE OR REPLACE TABLE `your_project.dataset.day_of_week_dimensional_table` AS
+SELECT
+  DATE(Date) AS date,
+  EXTRACT(YEAR FROM Date) AS year,
+  EXTRACT(MONTH FROM Date) AS month,
+  EXTRACT(DAY FROM Date) AS day,
+  (EXTRACT(DAYOFWEEK FROM Date) - 1) AS weekday
+FROM
+  `your_project.dataset.nasdaq_100_stock_data_partitioned_clustered`
+GROUP BY
+  date, year, month, day, weekday
+ORDER BY
+  date;
+```
+
+Using dbt to automate SQL transformations in Data Warehouse:
+```bash
+dbt init
+dbt debug
+dbt clean
+dbt run
 ```
 
 ## Data Visualization
@@ -146,6 +158,7 @@ docker run -d -p 3000:3000 --name metabase metabase/metabase
 Access Metabase at `localhost:3000` and connect it to BigQuery.
 
 ![Nasdaq 100 Stock Data Visualization](images/Metabase.png)
+Link to dashboard (if this works): [http://localhost:3000/public/dashboard/6341a728-2a35-4a43-befa-7ba14bdfe4e2](http://localhost:3000/public/dashboard/6341a728-2a35-4a43-befa-7ba14bdfe4e2)
 
 ### Dashboard Insights:
 1. **Weekly Stock Trends**: Average daily returns for each weekday.
