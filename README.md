@@ -7,7 +7,7 @@ This project analyzes the historical data of Nasdaq 100 index components over th
 2. [Technologies Used](#technologies-used)
 3. [Data Sources](#data-sources)
 4. [Setting Up GCP Environment](#setting-up-gcp-environment)
-5. [Data Orchestration with Airflow](#data-orchestration-with-airflow)
+5. [Data Orchestration](#data-orchestration-with-airflow)
 6. [Data Transformation](#data-transformation)
 7. [Data Warehouse](#data-warehouse)
 8. [Data Visualization](#data-visualization)
@@ -60,7 +60,7 @@ To clean up resources after the project, use:
 terraform destroy
 ```
 
-## Data Orchestration with Airflow
+## Data Orchestration
 To set up Airflow:
 ```bash
 cd /path/to/Airflow
