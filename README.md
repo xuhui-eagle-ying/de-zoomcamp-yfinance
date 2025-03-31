@@ -123,6 +123,15 @@ BigQuery processes:
 - **Dimensional Modeling**: Create lookup tables for stock metadata.
 - **Aggregations**: Compute annual returns and moving averages.
 
+SQL example for Partitioning & Clustering:
+```sql
+CREATE OR REPLACE TABLE `yahoo-finance-455223.yfinance_data.nasdaq_100_stock_data_partitioned_clustered` 
+PARTITION BY Date
+CLUSTER BY Ticker
+AS
+SELECT * FROM `yahoo-finance-455223.yfinance_data.nasdaq_100_stock_data`;
+```
+
 SQL example for dimensional modeling:
 ```sql
 CREATE OR REPLACE TABLE `your_project.dataset.day_of_week_dimensional_table` AS
