@@ -1,0 +1,29 @@
+name: nasdaq_data
+version: '1.0'
+profile: 'my_project'
+
+models:
+  nasdaq_data:
+    nasdaq_100_stock_data_partitioned_clustered:
+      materialized: table
+    big_seven_stock_data_partitioned_clustered:
+      materialized: table
+    nasdaq_100_yearly_data_clustered:
+      materialized: table
+
+    day_of_week_dimensional_table:
+      materialized: table
+    individual_stock_dimensional_table:
+      materialized: table
+
+    stock_with_day_of_week:
+      materialized: table
+    big_seven_vs_index:
+      materialized: table
+
+sources:
+  raw_data:
+    schema: public
+    tables:
+      - name: users
+      - name: transactions

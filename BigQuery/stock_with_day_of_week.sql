@@ -11,7 +11,8 @@ SELECT
   d.year,
   d.month,
   d.day,
-  d.weekday
+  d.weekday,
+  s.daily_return
 FROM
   `yahoo-finance-455223.yfinance_data.nasdaq_100_stock_data_partitioned_clustered` s
 JOIN
