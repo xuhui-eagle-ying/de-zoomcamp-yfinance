@@ -125,11 +125,11 @@ BigQuery processes:
 
 SQL example for Partitioning & Clustering:
 ```sql
-CREATE OR REPLACE TABLE `yahoo-finance-455223.yfinance_data.nasdaq_100_stock_data_partitioned_clustered` 
+CREATE OR REPLACE TABLE `your_project.dataset.nasdaq_100_stock_data_partitioned_clustered` 
 PARTITION BY Date
 CLUSTER BY Ticker
 AS
-SELECT * FROM `yahoo-finance-455223.yfinance_data.nasdaq_100_stock_data`;
+SELECT * FROM `your_project.dataset.nasdaq_100_stock_data`;
 ```
 
 SQL example for dimensional modeling:
